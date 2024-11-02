@@ -176,6 +176,8 @@
             padding: 15px;
             max-width: 200px;
             text-align: left;
+            opacity: 0; /* Исходное состояние скрыто для анимации */
+            transform: translateY(50px) scale(0.95); /* Исходная позиция ниже и уменьшена */
         }
         .impact-card .icon {
             font-size: 40px;
@@ -199,6 +201,9 @@
             }
         }
     </style>
+    <!-- Подключение GSAP и ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
 </head>
 <body>
@@ -406,6 +411,29 @@
 
     navToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
+    });
+
+    // Анимация с использованием GSAP на карточках инфографики в блоке "Изменения"
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(".impact-card",
+    {
+        opacity: 0,
+        y: 50,
+        scale: 0.95
+    },
+    {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        stagger: 0.3,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: ".impact-card",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
     });
 </script>
 </body>
